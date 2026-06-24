@@ -45,7 +45,7 @@ describe('RegionRow', () => {
     );
 
     expect(screen.getByText('30°N–40°N, 130°E–140°E')).toBeInTheDocument();
-    expect(screen.getByText('3.50')).toBeInTheDocument();
+    expect(screen.getByText('+3.50')).toBeInTheDocument();
   });
 
   it('shows current vs baseline rates', () => {
@@ -129,8 +129,10 @@ describe('RegionRow', () => {
       </table>,
     );
 
-    const row = container.querySelector('tr');
-    expect(row?.className).toContain('bg-red');
+    // Severity color is applied via the accent rail span's inline background-color
+    const accentRail = container.querySelector('td span[aria-hidden="true"]') as HTMLElement;
+    expect(accentRail).toBeTruthy();
+    expect(accentRail.style.backgroundColor).toBeTruthy();
   });
 
   it('shows z-score as "—" when it is 0 and baseline is 0', () => {

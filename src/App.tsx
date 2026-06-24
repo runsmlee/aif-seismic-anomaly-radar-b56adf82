@@ -169,7 +169,9 @@ export default function App() {
               Seismic Anomaly Radar
             </h1>
             <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-400 sm:text-base">
-              Where is the ground unusually active right now? Z-score analysis of live USGS data ranks regions by anomaly severity.
+              See where earthquakes are unusually frequent right now. Live analysis compares each
+              region's current 7-day activity to its own 30-day baseline — spotting unusual
+              earthquake activity before it makes headlines.
             </p>
           </div>
           <div className="flex shrink-0 items-center gap-3">
@@ -253,7 +255,7 @@ export default function App() {
         {/* Main content */}
         {!loading && !error && regions.length > 0 && (
           <div className="animate-fade-in space-y-6">
-            <HeroInsight regions={regions} />
+            <HeroInsight regions={regions} onSelectRegion={handlePin} pinnedKeys={pinnedKeys} />
             <SeismicMap regions={regions} onSelectRegion={handlePin} />
             <PinnedRegions pinned={pinned} onUnpin={handleUnpin} />
             <div className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/40 shadow-lg shadow-black/20">

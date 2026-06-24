@@ -113,7 +113,7 @@ describe('App', () => {
     });
   });
 
-  it('displays the tagline', async () => {
+  it('displays the SEO tagline with high-intent keywords', async () => {
     const mockData = makeMockUSGS(Date.now());
     vi.mocked(fetch).mockResolvedValueOnce({
       ok: true,
@@ -126,6 +126,42 @@ describe('App', () => {
       expect(screen.getByTestId('anomaly-leaderboard')).toBeInTheDocument();
     });
 
-    expect(screen.getByText(/Where is the ground unusually active/i)).toBeInTheDocument();
+    expect(screen.getByText(/where earthquakes are unusually frequent right now/i)).toBeInTheDocument();
+  });
+
+  it('renders a semantic table caption for crawlers', async () => {
+    const mockData = makeMockUSGS(Date.now());
+    vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve(mockData),
+    } as Response);
+
+    render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('anomaly-leaderboard')).toBeInTheDocument();
+    });
+
+    const caption = screen.getByText(/Global seismic anomaly ranking/i);
+    expect(caption.tagName).toBe('CAPTION');
+  });
+
+  it('makes the hero top anomaly clickable to pin it', async () => {
+    const mockData = makeMockUSGS(Date.now());
+    vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve(mockData),
+    } as Response);
+
+    render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('anomaly-leaderboard')).toBeInTheDocument();
+    });
+
+    const heroPinBtn = screen.getByTestId('hero-pin-toggle');
+    expect(heroPinBtn).toHaveAttribute('aria-pressed', 'false');
+    await userEvent.click(heroPinBtn);
+    expect(heroPinBtn).toHaveAttribute('aria-pressed', 'true');
   });
 });

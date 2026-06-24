@@ -16,6 +16,12 @@ export default function AnomalyLeaderboard({
     <div data-testid="anomaly-leaderboard" className="w-full">
       <div className="overflow-x-auto">
         <table className="w-full min-w-[760px] border-collapse">
+          <caption className="sr-only">
+            Global seismic anomaly ranking — regions ranked by z-score showing where earthquake
+            activity is unusually elevated compared to each region's own 30-day baseline. Columns:
+            pin, region coordinates, z-score, current daily rate, baseline daily rate, largest
+            magnitude, 14-day trend, and 7-day event count.
+          </caption>
           <thead>
             <tr className="border-b border-slate-800 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500">
               <th className="px-3 py-3.5 w-12" scope="col">

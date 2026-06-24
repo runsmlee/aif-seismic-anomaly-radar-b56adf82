@@ -1,8 +1,11 @@
 import type { AnomalyRegion, EarthquakeEvent } from '../types';
 import { severityFor } from '../lib/severity';
+import { cellKey } from '../lib/seismic';
 
 interface HeroInsightProps {
   regions: AnomalyRegion[];
+  onSelectRegion?: (region: AnomalyRegion) => void;
+  pinnedKeys?: Set<string>;
 }
 
 function shortPlace(region: AnomalyRegion): string {
@@ -28,10 +31,11 @@ interface Kpi {
   accent: string;
 }
 
-export default function HeroInsight({ regions }: HeroInsightProps) {
+export default function HeroInsight({ regions, onSelectRegion, pinnedKeys }: HeroInsightProps) {
   const top = regions[0];
   const calm = !top || top.zScore < 1;
   const sev = severityFor(top?.zScore ?? 0);
+  const topIsPinned = top && pinnedKeys ? pinnedKeys.has(cellKey(top.cell)) : false;
 
   const anomalousCount = regions.filter((r) => r.zScore >= 2).length;
   const totalQuakes7d = regions.reduce((s, r) => s + r.totalEvents7d, 0);
@@ -94,8 +98,22 @@ export default function HeroInsight({ regions }: HeroInsightProps) {
               </p>
             ) : (
               <p className="text-lg font-semibold leading-snug text-slate-100 sm:text-2xl">
-                <span style={{ color: sev.color }}>{shortPlace(top)}</span> is the most
-                abnormally active zone right now
+                {onSelectRegion && top ? (
+                  <button
+                    type="button"
+                    onClick={() => onSelectRegion(top)}
+                    aria-pressed={topIsPinned}
+                    aria-label={`${topIsPinned ? 'Unpin' : 'Pin'} ${shortPlace(top)} — the most abnormally active region`}
+                    data-testid="hero-pin-toggle"
+                    className="inline-flex items-center gap-1.5 text-left transition-opacity hover:opacity-80"
+                  >
+                    <span style={{ color: sev.color }}>{shortPlace(top)}</span>
+                    <span className="text-base" aria-hidden="true">{topIsPinned ? '★' : '☆'}</span>
+                  </button>
+                ) : (
+                  <span style={{ color: sev.color }}>{top ? shortPlace(top) : ''}</span>
+                )}
+                <span> is the most abnormally active zone right now</span>
                 {mult ? (
                   <>
                     {' '}— running{' '}
