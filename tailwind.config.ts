@@ -6,19 +6,35 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#EF4444',
-          dark: '#B91C1C',
-          light: '#FCA5A5',
-          50: '#FEF2F2',
-          100: '#FEE2E2',
-          200: '#FECACA',
-          300: '#FCA5A5',
-          400: '#F87171',
-          500: '#EF4444',
-          600: '#DC2626',
-          700: '#B91C1C',
-          800: '#991B1B',
-          900: '#7F1D1D',
+          DEFAULT: '#d6361f',
+          dark: '#a81e16',
+          light: '#e8895f',
+          50: '#fdf4ef',
+          100: '#fae2d5',
+          200: '#f4c2a6',
+          300: '#ec9a72',
+          400: '#e0673a',
+          500: '#d6361f',
+          600: '#c12d1c',
+          700: '#a81e16',
+          800: '#8a1814',
+          900: '#701512',
+        },
+        // Neutral charcoal override of Tailwind's blue-tinted `slate`, tuned to
+        // the page ink (#0c0e13). Cuts the blue cast from every panel, border
+        // and gray text in one place — no per-component edits.
+        slate: {
+          50: '#f7f7f8',
+          100: '#ebebed',
+          200: '#dcdde0',
+          300: '#b4b6ba',
+          400: '#8c8f95',
+          500: '#6b6e74',
+          600: '#4e5056',
+          700: '#383a40',
+          800: '#23252a',
+          900: '#16171b',
+          950: '#0e0f12',
         },
       },
       fontFamily: {

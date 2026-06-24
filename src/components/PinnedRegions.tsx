@@ -64,7 +64,7 @@ export default function PinnedRegions({ pinned, onUnpin }: PinnedRegionsProps) {
                 data={historyData.length > 1 ? historyData : [region.zScore, region.zScore]}
                 width={60}
                 height={20}
-                color="#EF4444"
+                color="#d6361f"
               />
 
               <button

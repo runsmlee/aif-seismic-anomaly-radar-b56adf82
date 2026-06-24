@@ -13,7 +13,7 @@ export default function Sparkline({
   data,
   width = 80,
   height = 24,
-  color = '#EF4444',
+  color = '#d6361f',
   fillOpacity = 0.15,
 }: SparklineProps) {
   if (data.length === 0) {

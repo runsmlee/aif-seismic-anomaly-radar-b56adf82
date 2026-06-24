@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import AnomalyLeaderboard from './components/AnomalyLeaderboard';
 import PinnedRegions from './components/PinnedRegions';
+import HeroInsight from './components/HeroInsight';
+import SeismicMap from './components/SeismicMap';
 import { useEarthquakeData } from './hooks/useEarthquakeData';
 import { cellKey } from './lib/seismic';
 import type { AnomalyRegion, PinnedRegion, PinnedRegionSnapshot } from './types';
@@ -149,7 +151,7 @@ export default function App() {
   }, [refresh]);
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-[#0c0e13]">
       {/* Subtle top accent line */}
       <div className="h-1 w-full bg-gradient-to-r from-primary-700 via-primary-500 to-primary-700" />
 
@@ -158,7 +160,7 @@ export default function App() {
         <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <div className="mb-2 flex items-center gap-2">
-              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-primary-500 live-dot shadow-[0_0_8px_rgba(239,68,68,0.6)]" aria-hidden="true" />
+              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-primary-500 live-dot shadow-[0_0_6px_rgba(214,54,31,0.5)]" aria-hidden="true" />
               <span className="text-xs font-medium uppercase tracking-wider text-primary-400">
                 Live Seismic Data
               </span>
@@ -250,9 +252,18 @@ export default function App() {
 
         {/* Main content */}
         {!loading && !error && regions.length > 0 && (
-          <div className="animate-fade-in space-y-5">
+          <div className="animate-fade-in space-y-6">
+            <HeroInsight regions={regions} />
+            <SeismicMap regions={regions} onSelectRegion={handlePin} />
             <PinnedRegions pinned={pinned} onUnpin={handleUnpin} />
-            <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/40 shadow-lg shadow-black/20">
+            <div className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/40 shadow-lg shadow-black/20">
+              <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
+                <div>
+                  <h2 className="text-sm font-semibold text-slate-200">Full anomaly ranking</h2>
+                  <p className="text-xs text-slate-500">Click any region to pin it and track its trend</p>
+                </div>
+                <span className="hidden text-xs text-slate-500 sm:block">{regions.length} regions</span>
+              </div>
               <AnomalyLeaderboard
                 regions={regions}
                 pinnedKeys={pinnedKeys}

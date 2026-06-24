@@ -4,10 +4,10 @@
 
 :root {
   /* Brand: #EF4444 — seismic red */
-  --brand-primary: #ef4444;
-  --brand-primary-hover: #dc2626;
-  --brand-primary-active: #b91c1c;
-  --brand-glow: rgba(239, 68, 68, 0.15);
+  --brand-primary: #d6361f;
+  --brand-primary-hover: #c12d1c;
+  --brand-primary-active: #a81e16;
+  --brand-glow: rgba(214, 54, 31, 0.14);
 }
 
 html {
@@ -17,7 +17,7 @@ html {
 
 body {
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  background-color: #0a0f1e;
+  background-color: #0c0e13;
   color: #e2e8f0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -30,21 +30,21 @@ body {
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #121317;
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #383a40;
   border-radius: 5px;
-  border: 2px solid #0f172a;
+  border: 2px solid #121317;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #4e5056;
 }
 
 /* Selection */
 ::selection {
-  background-color: rgba(239, 68, 68, 0.25);
-  color: #fef2f2;
+  background-color: rgba(214, 54, 31, 0.25);
+  color: #fdeee9;
 }
 
 /* Focus ring for keyboard users */
@@ -67,9 +67,9 @@ body {
 .skeleton-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(30, 41, 59, 0.5) 25%,
-    rgba(51, 65, 85, 0.7) 50%,
-    rgba(30, 41, 59, 0.5) 75%
+    rgba(35, 37, 42, 0.5) 25%,
+    rgba(56, 58, 64, 0.7) 50%,
+    rgba(35, 37, 42, 0.5) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 1.8s ease-in-out infinite;
@@ -89,4 +89,39 @@ body {
 
 .live-dot {
   animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Expanding ring on the strongest anomaly (radar ping) */
+@keyframes ping-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  70%,
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+.ping-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ping-ring 2.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Staggered entrance for stat cards / rows */
+@keyframes rise-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise-in {
+  animation: rise-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
